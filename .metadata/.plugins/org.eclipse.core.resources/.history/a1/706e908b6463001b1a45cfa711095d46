@@ -1,0 +1,23 @@
+package br.com.cotiinformatica.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class HomeController {
+
+	//método para definir uma rota dentro do projeto
+	//ROTA -> caminho para acesso a páginas
+	@RequestMapping("/home") //página inicial do projeto
+	public String home() {
+		
+		return "home"; //nome da página que será aberta
+		//WEB-INF/views/home.jsp
+		
+		/*
+		 * Esta página deverá estar dentro de: '/WEB-INF/views/'
+		 * Esta página deverá ter a extensão '.jsp'
+		 */
+		
+	}
+}

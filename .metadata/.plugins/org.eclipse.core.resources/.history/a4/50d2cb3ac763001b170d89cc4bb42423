@@ -1,0 +1,24 @@
+package br.com.cotiinformatica.controller;
+
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class ClientesController {
+	
+	// método para abrir a página de cadastro de clientes
+		@RequestMapping("/formularioCliente") //que vai aparecer na URL
+		public String formularioCliente() {
+			// WEB-INF/views/clientes/formulario-cliente.jsp
+			return "clientes/formulario-cliente";
+		}
+
+		// método para abrir a página de consulta de clientes
+		@RequestMapping("/listagemClientes")
+		public String listagemClientes() {
+			// WEB-INF/views/clientes/listagem-clientes.jsp
+			return "clientes/listagem-clientes";
+	}
+
+}
