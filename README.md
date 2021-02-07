@@ -1,15 +1,19 @@
-Projeto (CRUD de Clientes)
+# Projeto (CRUD de Clientes)Projeto (CRUD de Clientes)
 
-Projeto Java Web para cadastro, consulta, edição e exclusão de clientes.
-Tecnologias:
+
+ Projeto Java Web para cadastro, consulta, edição e exclusão de clientes.Projeto Java Web para cadastro, consulta, edição e exclusão de clientes.
+
+Tecnologias: 
+
 • BACKEND
-o MAVEN
-o SPRING MVC
-o SPRING JDBC
+-  MAVEN
+-  SPRING MVC
+-  SPRING JDBC
+
 • FRONTEND
-o JSP
-o JSTL
-o BOOTSTRAP
-o JQUERY + Plugin
-• SERVIDOR WEB
-o TOMCAT
+-  JSP
+-  JSTL
+-  BOOTSTRAP
+-  JQUERY + Plugin
+-  SERVIDOR WEB
+-  TOMCAT
