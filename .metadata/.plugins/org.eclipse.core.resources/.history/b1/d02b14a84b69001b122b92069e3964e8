@@ -1,0 +1,111 @@
+package br.com.cotiinformatica.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import br.com.cotiinformatica.entities.Cliente;
+import br.com.cotiinformatica.repositories.interfaces.IClienteRepository;
+
+@Controller
+public class ClientesController {
+	
+	@Autowired
+	private IClienteRepository clienteRepository;
+
+	// método para abrir a página de cadastro de clientes
+	@RequestMapping("/formularioCliente")
+	public ModelAndView formularioCliente() {
+
+		// definindo o caminho da página que o método irá acessar atraves da ROTA..
+		ModelAndView modelAndView = new ModelAndView("clientes/formulario-cliente");
+
+		// enviando para a página uma instância de cliente
+		modelAndView.addObject("cliente", new Cliente());
+
+		return modelAndView;
+	}
+
+	// método para receber o SUBMIT POST do formulário
+	@RequestMapping(value = "/cadastrarCliente", method = RequestMethod.POST)
+	public ModelAndView cadastrarCliente(Cliente cliente, ModelMap map) {
+				
+		try {
+			
+			//verificando se o email informado já encontra-se cadastrado..
+			if(clienteRepository.findByEmail(cliente.getEmail()) != null) {
+				throw new Exception("O email " + cliente.getEmail() + ", já encontra-se cadastrado. Tente outro.");
+			}
+			
+			//gravando o objeto cliente no banco de dados
+			clienteRepository.create(cliente);
+			
+			// definindo uma mensagem para exibir na página..
+			map.addAttribute("mensagem_sucesso", "Cliente " + cliente.getNome() + ", cadastrado com sucesso.");
+		}
+		catch(Exception e) {
+			map.addAttribute("mensagem_erro", e.getMessage());
+		}	
+		
+		// criando um objeto ModelAndView
+		ModelAndView modelAndView = new ModelAndView("clientes/formulario-cliente", map);
+		// enviando para a página uma instância de cliente
+		modelAndView.addObject("cliente", new Cliente());
+		return modelAndView;
+	}
+
+	// método para abrir a página de consulta de clientes
+	@RequestMapping("/listagemClientes")
+	public ModelAndView listagemClientes(ModelMap map) {
+				
+		// WEB-INF/views/clientes/listagem-clientes.jsp
+		ModelAndView modelAndView = new ModelAndView("clientes/listagem-clientes");
+		
+		try {
+			//executando a consulta de clientes no banco de dados (repositório)
+			// e envia-la para a página atraves da classe ModelAndView
+			modelAndView.addObject("clientes", clienteRepository.findAll());
+			
+		}catch(Exception e) {
+			//mensagem de erro..
+			map.addAttribute("mensagem_erro",e.getMessage());
+		}
+				
+		return modelAndView;
+	}
+	
+	//método para realizar a ação de exclusão
+	@RequestMapping("/excluirCliente")
+	public ModelAndView excluirCliente(Integer id, ModelMap map) {
+		
+		ModelAndView modelAndView = new ModelAndView("clientes/listagem-clientes");
+		
+		try {
+			//buscar o cliente no banco de dados atraves do id..
+			Cliente cliente = clienteRepository.findById(id);
+			
+			//verificar se o cliente foi encontrado..
+			if(cliente !=null) {
+				//excluindo o cliente..
+				clienteRepository.delete(id);
+				
+				//gerando mensagem..
+				map.addAttribute("mensagem_sucesso", "Cliente " + cliente.getNome() + ", excluído com sucesso.");
+			}
+			else {
+				map.addAttribute("mensagem_erro", "Cliente não encontrado.");
+			}
+			
+			//executando a consulta de clientes para exibir na página de listagem..
+			modelAndView.addObject("clientes", clienteRepository.findAll());
+		}
+		catch(Exception e) {
+			map.addAttribute("mensagem_erro", e.getMessage());
+		}
+		
+		return modelAndView;
+	}
+}

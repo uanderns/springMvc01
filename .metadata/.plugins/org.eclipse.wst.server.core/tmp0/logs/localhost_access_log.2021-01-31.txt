@@ -176,3 +176,13 @@
 0:0:0:0:0:0:0:1 - - [31/Jan/2021:12:24:11 -0300] "GET /springMvc01/ HTTP/1.1" 200 901
 0:0:0:0:0:0:0:1 - - [31/Jan/2021:12:24:13 -0300] "GET /springMvc01/formularioCliente HTTP/1.1" 200 2262
 0:0:0:0:0:0:0:1 - - [31/Jan/2021:12:24:23 -0300] "POST /springMvc01/cadastrarCliente HTTP/1.1" 200 2626
+127.0.0.1 - - [31/Jan/2021:12:26:33 -0300] "GET / HTTP/1.1" 404 751
+0:0:0:0:0:0:0:1 - - [31/Jan/2021:12:26:34 -0300] "GET /springMvc01/ HTTP/1.1" 200 901
+0:0:0:0:0:0:0:1 - - [31/Jan/2021:12:26:41 -0300] "GET /springMvc01/formularioCliente HTTP/1.1" 200 2262
+0:0:0:0:0:0:0:1 - - [31/Jan/2021:12:26:56 -0300] "POST /springMvc01/cadastrarCliente HTTP/1.1" 200 2580
+0:0:0:0:0:0:0:1 - - [31/Jan/2021:15:14:10 -0300] "GET /springMvc01/formularioCliente HTTP/1.1" 200 2262
+0:0:0:0:0:0:0:1 - - [31/Jan/2021:15:14:10 -0300] "GET /springMvc01/resources/js/jquery-3.5.1.min.js HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [31/Jan/2021:15:14:10 -0300] "GET /springMvc01/resources/css/bootstrap.min.css HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [31/Jan/2021:15:14:10 -0300] "GET /springMvc01/resources/js/jquery.validate.min.js HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [31/Jan/2021:15:14:10 -0300] "GET /springMvc01/resources/js/messages_pt_BR.min.js HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [31/Jan/2021:15:14:10 -0300] "GET /springMvc01/resources/js/bootstrap.min.js HTTP/1.1" 304 -

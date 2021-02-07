@@ -2,9 +2,7 @@ INDEX VERSION 1.4+C:\WebJavaDeveloper-Domingo\Aula06\.metadata\.plugins\org.ecli
 3995409886.index
 3802837772.index
 456031214.index
-1731564096.index
 3066561678.index
 132797322.index
 647632921.index
-1731564096.index
 2399204355.index
