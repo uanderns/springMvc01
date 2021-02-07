@@ -59,8 +59,116 @@ public class ClientesController {
 
 	// método para abrir a página de consulta de clientes
 	@RequestMapping("/listagemClientes")
-	public String listagemClientes() {
+	public ModelAndView listagemClientes(ModelMap map) {
+				
 		// WEB-INF/views/clientes/listagem-clientes.jsp
-		return "clientes/listagem-clientes";
+		ModelAndView modelAndView = new ModelAndView("clientes/listagem-clientes");
+		
+		try {
+			//executando a consulta de clientes no banco de dados (repositório)
+			// e envia-la para a página atraves da classe ModelAndView
+			modelAndView.addObject("clientes", clienteRepository.findAll());
+			
+		}catch(Exception e) {
+			//mensagem de erro..
+			map.addAttribute("mensagem_erro",e.getMessage());
+		}
+				
+		return modelAndView;
+	}
+	
+	//método para realizar a ação de exclusão
+	@RequestMapping("/excluirCliente")
+	public ModelAndView excluirCliente(Integer id, ModelMap map) {
+		
+		ModelAndView modelAndView = new ModelAndView("clientes/listagem-clientes");
+		
+		try {
+			//buscar o cliente no banco de dados atraves do id..
+			Cliente cliente = clienteRepository.findById(id);
+			
+			//verificar se o cliente foi encontrado..
+			if(cliente !=null) {
+				//excluindo o cliente..
+				clienteRepository.delete(id);
+				
+				//gerando mensagem..
+				map.addAttribute("mensagem_sucesso", "Cliente " + cliente.getNome() + ", excluído com sucesso.");
+			}
+			else {
+				map.addAttribute("mensagem_erro", "Cliente não encontrado.");
+			}
+			
+			//executando a consulta de clientes para exibir na página de listagem..
+			modelAndView.addObject("clientes", clienteRepository.findAll());
+		}
+		catch(Exception e) {
+			map.addAttribute("mensagem_erro", e.getMessage());
+		}
+		
+		return modelAndView;
+	}
+	
+	//método para abrir a página de edição do cliente
+	@RequestMapping("edicaoCliente")
+	public ModelAndView edicaoCliente(Integer id, ModelMap map) {
+		
+		ModelAndView modelAndView = new ModelAndView("clientes/edicao-clientes");
+		
+		try {
+			
+			//obter os dados cliente no repositorio (findById)
+			Cliente cliente = clienteRepository.findById(id);
+			
+			if(cliente != null) { //verificando se o cliente foi encontrado..
+				
+				//enviando um objeto cliente para a página (já preenchido)
+				modelAndView.addObject("cliente", cliente);
+			}
+			else {
+				map.addAttribute("mensagem_erro", "Cliente não encontrado."); // enviando mensagem de erro
+				
+				modelAndView.setViewName("clientes/listagem-clientes"); //enviado para página apos nao encontrar o cliente
+				modelAndView.addObject("clientes", clienteRepository.findAll()); // exibbindo a lista de clientes 
+			}
+			
+		}catch(Exception e) {
+			map.addAttribute("mensagem_erro", e.getMessage());
+		}
+		
+		
+		return modelAndView;
+	}
+	
+	//Método para processar o SUBMIT POST do formulario de edição de cliente..
+	@RequestMapping(value="atualizarCliente", method = RequestMethod.POST)
+	public ModelAndView atualizarCliente(Cliente cliente, ModelMap map) {
+		
+		ModelAndView modelAndView = new ModelAndView("clientes/edicao-clientes");
+		
+		try {
+			//verificar se o email informado ja encontra-se cadastrado..
+			Cliente registro = clienteRepository.findByEmail(cliente.getEmail());
+			
+			//verificar se o cliente encontrado é outro cliente (com o mesmo email)
+			if(registro != null && !registro.equals(cliente)) {
+				map.addAttribute("mensagem_erro", "O email informado já encontra-se cadastrado para outro cliente.");
+			}
+			else {
+				//atualizando o cliente..
+				clienteRepository.update(cliente);				
+				//mensagem de sucesso..
+				map.addAttribute("mensagem_sucesso", "Cliente atualizado com sucesso.");
+				
+			}
+			
+			modelAndView.addObject("cliente", cliente);
+			
+			
+		}catch(Exception e) {
+			map.addAttribute("mensagem_erro", e.getMessage());
+		}
+				
+		return modelAndView;
 	}
 }
